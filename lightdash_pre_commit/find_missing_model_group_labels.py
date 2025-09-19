@@ -1,7 +1,5 @@
 import argparse
-from typing import List
-from typing import Optional
-from typing import Sequence
+from typing import List, Optional, Sequence
 
 import yaml
 
@@ -13,7 +11,7 @@ def find_missing_model_group_labels(
 
     for model in data.get("models", []):
         # Check model-level 'group_label' in meta
-        model_group_label = model.get("meta", {}).get("group_label")
+        model_group_label = model.get("config", {}).get("meta", {}).get("group_label")
         if not model_group_label:
             errors.append(f"Missing 'group_label' in model '{model['name']}' meta.")
         elif allowed_labels and model_group_label not in allowed_labels:

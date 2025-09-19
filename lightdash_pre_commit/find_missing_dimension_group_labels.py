@@ -1,6 +1,5 @@
 import argparse
-from typing import Optional
-from typing import Sequence
+from typing import Optional, Sequence
 
 import yaml
 
@@ -11,10 +10,10 @@ def find_missing_group_labels(data: dict) -> list:
     for model in data.get("models", []):
         # Check metrics and dimensions inside each column
         for column in model.get("columns", []):
-            if "meta" in column:
+            if "config" in column and "meta" in column["config"]:
                 # Check primary dimension
-                if "dimension" in column["meta"]:
-                    dimension_details = column["meta"]["dimension"]
+                if "dimension" in column["config"]["meta"]:
+                    dimension_details = column["config"]["meta"]["dimension"]
                     if (
                         not dimension_details.get("hidden", False)
                         and not dimension_details.get("skip_group_label", False)
@@ -26,8 +25,8 @@ def find_missing_group_labels(data: dict) -> list:
                         )
 
                 # Check additional dimensions
-                if "additional_dimensions" in column["meta"]:
-                    for dimension_name, dim_details in column["meta"][
+                if "additional_dimensions" in column["config"]["meta"]:
+                    for dimension_name, dim_details in column["config"]["meta"][
                         "additional_dimensions"
                     ].items():
                         if (

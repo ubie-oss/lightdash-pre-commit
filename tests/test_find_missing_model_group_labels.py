@@ -8,23 +8,25 @@ from lightdash_pre_commit.find_missing_model_group_labels import (
 
 
 class TestFindMissingModelGroupLabels(unittest.TestCase):
-
     def test_model_with_group_label(self):
         yaml_data = """
 models:
   - name: test_model_with_group_label
-    meta:
-      group_label: "Finance"
+    config:
+      meta:
+        group_label: "Finance"
     columns:
       - name: date_at
-        meta:
-          dimension:
-            type: date
-            time_intervals: [ 'DAY', 'WEEK', 'MONTH', 'QUARTER' ]
+        config:
+          meta:
+            dimension:
+              type: date
+              time_intervals: [ 'DAY', 'WEEK', 'MONTH', 'QUARTER' ]
       - name: revenue
-        meta:
-          dimension:
-            hidden: true
+        config:
+          meta:
+            dimension:
+              hidden: true
         """
         data = yaml.safe_load(yaml_data)
         errors = find_missing_model_group_labels(data)
@@ -34,18 +36,21 @@ models:
         yaml_data = """
 models:
   - name: test_model_missing_group_label
-    meta:
-      label: "Finance Metrics"
+    config:
+      meta:
+        label: "Finance Metrics"
     columns:
       - name: date_at
-        meta:
-          dimension:
-            type: date
-            time_intervals: [ 'DAY', 'WEEK', 'MONTH', 'QUARTER' ]
+        config:
+          meta:
+            dimension:
+              type: date
+              time_intervals: [ 'DAY', 'WEEK', 'MONTH', 'QUARTER' ]
       - name: revenue
-        meta:
-          dimension:
-            hidden: true
+        config:
+          meta:
+            dimension:
+              hidden: true
         """
         data = yaml.safe_load(yaml_data)
         errors = find_missing_model_group_labels(data)
@@ -58,18 +63,21 @@ models:
         yaml_data = """
 models:
   - name: test_model_invalid_group_label
-    meta:
-      group_label: "InvalidLabel"
+    config:
+      meta:
+        group_label: "InvalidLabel"
     columns:
       - name: date_at
-        meta:
-          dimension:
-            type: date
-            time_intervals: [ 'DAY', 'WEEK', 'MONTH', 'QUARTER' ]
+        config:
+          meta:
+            dimension:
+              type: date
+              time_intervals: [ 'DAY', 'WEEK', 'MONTH', 'QUARTER' ]
       - name: revenue
-        meta:
-          dimension:
-            hidden: true
+        config:
+          meta:
+            dimension:
+              hidden: true
         """
         data = yaml.safe_load(yaml_data)
         errors = find_missing_model_group_labels(
@@ -85,18 +93,20 @@ models:
         yaml_data = """
 models:
   - name: test_model_with_valid_metrics_group_label
-    meta:
-      group_label: "Finance"
-      metrics:
-        total_revenue:
-          sql: "sum(revenue)"
-          group_label: "MetricsGroup"
+    config:
+      meta:
+        group_label: "Finance"
+        metrics:
+          total_revenue:
+            sql: "sum(revenue)"
+            group_label: "MetricsGroup"
     columns:
       - name: date_at
-        meta:
-          dimension:
-            type: date
-            time_intervals: [ 'DAY', 'WEEK', 'MONTH', 'QUARTER' ]
+        config:
+          meta:
+            dimension:
+              type: date
+              time_intervals: [ 'DAY', 'WEEK', 'MONTH', 'QUARTER' ]
         """
         data = yaml.safe_load(yaml_data)
         errors = find_missing_model_group_labels(
@@ -115,19 +125,21 @@ models:
         yaml_data = """
 models:
   - name: test_model_with_invalid_metrics_group_label
-    meta:
-      group_label: "Finance"
+    config:
+      meta:
+        group_label: "Finance"
 
-      metrics:
-        total_revenue:
-          sql: "sum(revenue)"
-          group_label: "InvalidMetricsGroup"
+        metrics:
+          total_revenue:
+            sql: "sum(revenue)"
+            group_label: "InvalidMetricsGroup"
     columns:
       - name: date_at
-        meta:
-          dimension:
-            type: date
-            time_intervals: [ 'DAY', 'WEEK', 'MONTH', 'QUARTER' ]
+        config:
+          meta:
+            dimension:
+              type: date
+              time_intervals: [ 'DAY', 'WEEK', 'MONTH', 'QUARTER' ]
         """
         data = yaml.safe_load(yaml_data)
         errors = find_missing_model_group_labels(

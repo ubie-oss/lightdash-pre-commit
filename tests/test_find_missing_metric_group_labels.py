@@ -14,23 +14,25 @@ models:
   - name: test_no_metrics_defined
     columns:
       - name: date_at
-        meta:
-          dimension:
-            type: date
-            time_intervals: [ 'DAY', 'WEEK', 'MONTH', 'QUARTER' ]
-          additional_dimensions:
-            period_7_days:
-              type: string
-              sql: "abc"
-              group_label: "Period Indicators"
-            period_28_days:
-              type: string
-              sql: "abc"
+        config:
+          meta:
+            dimension:
+              type: date
+              time_intervals: [ 'DAY', 'WEEK', 'MONTH', 'QUARTER' ]
+            additional_dimensions:
+              period_7_days:
+                type: string
+                sql: "abc"
+                group_label: "Period Indicators"
+              period_28_days:
+                type: string
+                sql: "abc"
 
       - name: revenue
-        meta:
-          dimension:
-            hidden: true
+        config:
+          meta:
+            dimension:
+              hidden: true
         """
         data = yaml.safe_load(yaml_data)
         errors = find_missing_group_labels(data)
@@ -40,42 +42,45 @@ models:
         yaml_data = """
 models:
   - name: test_all_metrics_have_group_label
-    meta:
-      metrics:
-        revenue_total:
-          sql: "sum(revenue)"
-          group_label: "Revenue"
-        profit_total:
-          sql: "sum(profit)"
-          group_label: "Revenue"
+    config:
+      meta:
+        metrics:
+          revenue_total:
+            sql: "sum(revenue)"
+            group_label: "Revenue"
+          profit_total:
+            sql: "sum(profit)"
+            group_label: "Revenue"
 
     columns:
       - name: date_at
-        meta:
-          dimension:
-            type: date
-            time_intervals: [ 'DAY', 'WEEK', 'MONTH', 'QUARTER' ]
-          additional_dimensions:
-            period_7_days:
-              type: string
-              sql: "abc"
-              group_label: "Period Indicators"
-            period_28_days:
-              type: string
-              sql: "abc"
-          metrics:
-            days_in_period:
-              type: number
-              sql: "(datediff('day', min(date_at), max(date_at)) + 1)"
-              group_label: "Revenue"
+        config:
+          meta:
+            dimension:
+              type: date
+              time_intervals: [ 'DAY', 'WEEK', 'MONTH', 'QUARTER' ]
+            additional_dimensions:
+              period_7_days:
+                type: string
+                sql: "abc"
+                group_label: "Period Indicators"
+              period_28_days:
+                type: string
+                sql: "abc"
+            metrics:
+              days_in_period:
+                type: number
+                sql: "(datediff('day', min(date_at), max(date_at)) + 1)"
+                group_label: "Revenue"
       - name: revenue
-        meta:
-          dimension:
-            hidden: true
-          metrics:
-            total_revenue:
-              type: sum
-              group_label: "Revenue"
+        config:
+          meta:
+            dimension:
+              hidden: true
+            metrics:
+              total_revenue:
+                type: sum
+                group_label: "Revenue"
         """
         data = yaml.safe_load(yaml_data)
         errors = find_missing_group_labels(data)
@@ -85,42 +90,45 @@ models:
         yaml_data = """
 models:
   - name: test_all_metrics_have_group_label
-    meta:
-      metrics:
-        revenue_total:
-          sql: "sum(revenue)"
-          group_label: "Revenue"
-        profit_total:
-          sql: "sum(profit)"
-          skip_group_label: true
+    config:
+      meta:
+        metrics:
+          revenue_total:
+            sql: "sum(revenue)"
+            group_label: "Revenue"
+          profit_total:
+            sql: "sum(profit)"
+            skip_group_label: true
 
     columns:
       - name: date_at
-        meta:
-          dimension:
-            type: date
-            time_intervals: [ 'DAY', 'WEEK', 'MONTH', 'QUARTER' ]
-          additional_dimensions:
-            period_7_days:
-              type: string
-              sql: "abc"
-              group_label: "Period Indicators"
-            period_28_days:
-              type: string
-              sql: "abc"
-          metrics:
-            days_in_period:
-              type: number
-              sql: "(datediff('day', min(date_at), max(date_at)) + 1)"
-              group_label: "Revenue"
+        config:
+          meta:
+            dimension:
+              type: date
+              time_intervals: [ 'DAY', 'WEEK', 'MONTH', 'QUARTER' ]
+            additional_dimensions:
+              period_7_days:
+                type: string
+                sql: "abc"
+                group_label: "Period Indicators"
+              period_28_days:
+                type: string
+                sql: "abc"
+            metrics:
+              days_in_period:
+                type: number
+                sql: "(datediff('day', min(date_at), max(date_at)) + 1)"
+                group_label: "Revenue"
       - name: revenue
-        meta:
-          dimension:
-            hidden: true
-          metrics:
-            total_revenue:
-              type: sum
-              group_label: "Revenue"
+        config:
+          meta:
+            dimension:
+              hidden: true
+            metrics:
+              total_revenue:
+                type: sum
+                group_label: "Revenue"
         """
         data = yaml.safe_load(yaml_data)
         errors = find_missing_group_labels(data)
@@ -130,42 +138,45 @@ models:
         yaml_data = """
 models:
   - name: test_all_metrics_have_group_label
-    meta:
-      metrics:
-        revenue_total:
-          sql: "sum(revenue)"
-          groups: ['abc']
+    config:
+      meta:
+        metrics:
+          revenue_total:
+            sql: "sum(revenue)"
+            groups: ['abc']
         profit_total:
           sql: "sum(profit)"
           skip_group_label: true
 
     columns:
       - name: date_at
-        meta:
-          dimension:
-            type: date
-            time_intervals: [ 'DAY', 'WEEK', 'MONTH', 'QUARTER' ]
-          additional_dimensions:
-            period_7_days:
-              type: string
-              sql: "abc"
-              group_label: "Period Indicators"
-            period_28_days:
-              type: string
-              sql: "abc"
-          metrics:
-            days_in_period:
-              type: number
-              sql: "(datediff('day', min(date_at), max(date_at)) + 1)"
-              groups: ['abc']
+        config:
+          meta:
+            dimension:
+              type: date
+              time_intervals: [ 'DAY', 'WEEK', 'MONTH', 'QUARTER' ]
+            additional_dimensions:
+              period_7_days:
+                type: string
+                sql: "abc"
+                group_label: "Period Indicators"
+              period_28_days:
+                type: string
+                sql: "abc"
+            metrics:
+              days_in_period:
+                type: number
+                sql: "(datediff('day', min(date_at), max(date_at)) + 1)"
+                groups: ['abc']
       - name: revenue
-        meta:
-          dimension:
-            hidden: true
-          metrics:
-            total_revenue:
-              type: sum
-              groups: ['abc']
+        config:
+          meta:
+            dimension:
+              hidden: true
+            metrics:
+              total_revenue:
+                type: sum
+                groups: ['abc']
         """
         data = yaml.safe_load(yaml_data)
         errors = find_missing_group_labels(data)
@@ -175,40 +186,43 @@ models:
         yaml_data = """
 models:
   - name: test_one_metric_missing_group_label
-    meta:
-      metrics:
-        revenue_total:
-          sql: "sum(revenue)"
-          group_label: "Revenue"
-        profit_total:
-          sql: "sum(profit)"
+    config:
+      meta:
+        metrics:
+          revenue_total:
+            sql: "sum(revenue)"
+            group_label: "Revenue"
+          profit_total:
+            sql: "sum(profit)"
 
     columns:
       - name: date_at
-        meta:
-          dimension:
-            type: date
-            time_intervals: [ 'DAY', 'WEEK', 'MONTH', 'QUARTER' ]
-          additional_dimensions:
-            period_7_days:
-              type: string
-              sql: "abc"
-              group_label: "Period Indicators"
-            period_28_days:
-              type: string
-              sql: "abc"
-          metrics:
-            days_in_period:
-              type: number
-              sql: "(datediff('day', min(date_at), max(date_at)) + 1)"
-              group_label: "Revenue"
+        config:
+          meta:
+            dimension:
+              type: date
+              time_intervals: [ 'DAY', 'WEEK', 'MONTH', 'QUARTER' ]
+            additional_dimensions:
+              period_7_days:
+                type: string
+                sql: "abc"
+                group_label: "Period Indicators"
+              period_28_days:
+                type: string
+                sql: "abc"
+            metrics:
+              days_in_period:
+                type: number
+                sql: "(datediff('day', min(date_at), max(date_at)) + 1)"
+                group_label: "Revenue"
       - name: revenue
-        meta:
-          dimension:
-            hidden: true
-          metrics:
-            total_revenue:
-              type: sum
+        config:
+          meta:
+            dimension:
+              hidden: true
+            metrics:
+              total_revenue:
+                type: sum
         """
         data = yaml.safe_load(yaml_data)
         errors = find_missing_group_labels(data)
@@ -221,41 +235,44 @@ models:
         yaml_data = """
 models:
   - name: test_metric_in_top_level_meta_missing_group_label
-    meta:
-      metrics:
-        revenue_total:
-          sql: "sum(revenue)"
-          group_label: "Revenue"
-        profit_total:
-          sql: "sum(profit)"
+    config:
+      meta:
+        metrics:
+          revenue_total:
+            sql: "sum(revenue)"
+            group_label: "Revenue"
+          profit_total:
+            sql: "sum(profit)"
 
     columns:
       - name: date_at
-        meta:
-          dimension:
-            type: date
-            time_intervals: [ 'DAY', 'WEEK', 'MONTH', 'QUARTER' ]
-          additional_dimensions:
-            period_7_days:
-              type: string
-              sql: "abc"
-              group_label: "Period Indicators"
-            period_28_days:
-              type: string
-              sql: "abc"
-          metrics:
-            days_in_period:
-              type: number
-              sql: "(datediff('day', min(date_at), max(date_at)) + 1)"
-              group_label: "Revenue"
+        config:
+          meta:
+            dimension:
+              type: date
+              time_intervals: [ 'DAY', 'WEEK', 'MONTH', 'QUARTER' ]
+            additional_dimensions:
+              period_7_days:
+                type: string
+                sql: "abc"
+                group_label: "Period Indicators"
+              period_28_days:
+                type: string
+                sql: "abc"
+            metrics:
+              days_in_period:
+                type: number
+                sql: "(datediff('day', min(date_at), max(date_at)) + 1)"
+                group_label: "Revenue"
       - name: revenue
-        meta:
-          dimension:
-            hidden: true
-          metrics:
-            total_revenue:
-              type: sum
-              group_label: "Revenue"
+        config:
+          meta:
+            dimension:
+              hidden: true
+            metrics:
+              total_revenue:
+                type: sum
+                group_label: "Revenue"
         """
         data = yaml.safe_load(yaml_data)
         errors = find_missing_group_labels(data)
@@ -268,39 +285,42 @@ models:
         yaml_data = """
 models:
   - name: test_multiple_metrics_missing_group_labels_across_models
-    meta:
-      metrics:
-        revenue_total:
-          sql: "sum(revenue)"
-          group_label: "Revenue"
-        profit_total:
-          sql: "sum(profit)"
+    config:
+      meta:
+        metrics:
+          revenue_total:
+            sql: "sum(revenue)"
+            group_label: "Revenue"
+          profit_total:
+            sql: "sum(profit)"
 
     columns:
       - name: date_at
-        meta:
-          dimension:
-            type: date
-            time_intervals: [ 'DAY', 'WEEK', 'MONTH', 'QUARTER' ]
-          additional_dimensions:
-            period_7_days:
-              type: string
-              sql: "abc"
-              group_label: "Period Indicators"
-            period_28_days:
-              type: string
-              sql: "abc"
-          metrics:
-            days_in_period:
-              type: number
-              sql: "(datediff('day', min(date_at), max(date_at)) + 1)"
+        config:
+          meta:
+            dimension:
+              type: date
+              time_intervals: [ 'DAY', 'WEEK', 'MONTH', 'QUARTER' ]
+            additional_dimensions:
+              period_7_days:
+                type: string
+                sql: "abc"
+                group_label: "Period Indicators"
+              period_28_days:
+                type: string
+                sql: "abc"
+            metrics:
+              days_in_period:
+                type: number
+                sql: "(datediff('day', min(date_at), max(date_at)) + 1)"
       - name: revenue
-        meta:
-          dimension:
-            hidden: true
-          metrics:
-            total_revenue:
-              type: sum
+        config:
+          meta:
+            dimension:
+              hidden: true
+            metrics:
+              total_revenue:
+                type: sum
         """
         data = yaml.safe_load(yaml_data)
         errors = find_missing_group_labels(data)

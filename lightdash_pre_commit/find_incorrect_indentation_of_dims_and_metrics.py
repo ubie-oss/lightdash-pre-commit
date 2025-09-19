@@ -1,6 +1,5 @@
 import argparse
-from typing import Optional
-from typing import Sequence
+from typing import Optional, Sequence
 
 import yaml
 
@@ -10,25 +9,25 @@ def find_indentation_issues(data: dict) -> list:
 
     for model in data.get("models", []):
         for column in model.get("columns", []):
-            if "meta" in column:
+            if "config" in column and "meta" in column["config"]:
                 # Check additional_dimensions under dimension
-                if "dimension" in column["meta"]:
-                    if "additional_dimensions" in column["meta"]["dimension"]:
+                if "dimension" in column["config"]["meta"]:
+                    if "additional_dimensions" in column["config"]["meta"]["dimension"]:
                         errors.append(
                             f"Incorrect indent: 'additional_dimensions' should not be a child of 'dimension' "
                             f"for column: {column.get('name')}."
                         )
 
                     # Check metrics under dimension
-                    if "metrics" in column["meta"]["dimension"]:
+                    if "metrics" in column["config"]["meta"]["dimension"]:
                         errors.append(
                             f"Incorrect indent: 'metrics' should not be a child of 'dimension' for column:"
                             f" {column.get('name')}."
                         )
 
                 # Check metrics under additional_dimensions
-                if "additional_dimensions" in column["meta"]:
-                    for ad_key, ad_value in column["meta"][
+                if "additional_dimensions" in column["config"]["meta"]:
+                    for ad_key, ad_value in column["config"]["meta"][
                         "additional_dimensions"
                     ].items():
                         if ad_key == "metrics":

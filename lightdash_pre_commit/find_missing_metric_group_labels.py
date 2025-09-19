@@ -1,11 +1,9 @@
 import argparse
-from typing import Optional
-from typing import Sequence
+from typing import Optional, Sequence
 
 import yaml
 
-from lightdash_pre_commit.utils import has_dimensions
-from lightdash_pre_commit.utils import has_metrics
+from lightdash_pre_commit.utils import has_dimensions, has_metrics
 
 
 def find_missing_group_labels(data: dict) -> list:
@@ -13,7 +11,7 @@ def find_missing_group_labels(data: dict) -> list:
 
     for model in data.get("models", []):
         # Check metrics at the model-level 'meta' tag
-        model_level_metrics = model.get("meta", {}).get("metrics", {})
+        model_level_metrics = model.get("config", {}).get("meta", {}).get("metrics", {})
         for metric, details in model_level_metrics.items():
             if (
                 "group_label" not in details
@@ -26,8 +24,12 @@ def find_missing_group_labels(data: dict) -> list:
 
         # Check metrics within the columns' 'meta' tag
         for column in model.get("columns", []):
-            if "meta" in column and "metrics" in column["meta"]:
-                for metric, details in column["meta"]["metrics"].items():
+            if (
+                "config" in column
+                and "meta" in column["config"]
+                and "metrics" in column["config"]["meta"]
+            ):
+                for metric, details in column["config"]["meta"]["metrics"].items():
                     if (
                         "group_label" not in details
                         and "groups" not in details

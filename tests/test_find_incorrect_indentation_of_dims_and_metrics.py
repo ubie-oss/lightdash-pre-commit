@@ -14,18 +14,19 @@ models:
   - name: ProperlyIndentedModel
     columns:
       - name: date_at
-        meta:
-          dimension:
-            type: date
-            label: "Date At"
-            time_intervals: ['DAY', 'WEEK', 'MONTH', 'QUARTER']
-            group_label: "Date Dimensions"
-          additional_dimensions:
-            period_7_days:
-              type: string
-              label: "Period - 7 Days"
-              sql: "SQL_QUERY_HERE"
-              group_label: "Period Indicators"
+        config:
+          meta:
+            dimension:
+              type: date
+              label: "Date At"
+              time_intervals: ['DAY', 'WEEK', 'MONTH', 'QUARTER']
+              group_label: "Date Dimensions"
+            additional_dimensions:
+              period_7_days:
+                type: string
+                label: "Period - 7 Days"
+                sql: "SQL_QUERY_HERE"
+                group_label: "Period Indicators"
         """
         data = yaml.safe_load(yaml_data)
         errors = find_indentation_issues(data)
@@ -37,19 +38,20 @@ models:
   - name: MetricsUnderAdditionalDimensions
     columns:
       - name: date_at
-        meta:
-          additional_dimensions:
-            period_7_days:
-              type: string
-              label: "Period - 7 Days"
-              sql: "SQL_QUERY_HERE"
-              group_label: "Period Indicators"
-            metrics:
-              days_in_period:
-                type: number
-                label: "Days in Period"
+        config:
+          meta:
+            additional_dimensions:
+              period_7_days:
+                type: string
+                label: "Period - 7 Days"
                 sql: "SQL_QUERY_HERE"
                 group_label: "Period Indicators"
+              metrics:
+                days_in_period:
+                  type: number
+                  label: "Days in Period"
+                  sql: "SQL_QUERY_HERE"
+                  group_label: "Period Indicators"
         """
         data = yaml.safe_load(yaml_data)
         errors = find_indentation_issues(data)
@@ -65,16 +67,17 @@ models:
   - name: AdditionalDimensionsUnderDimension
     columns:
       - name: revenue
-        meta:
-          dimension:
-            type: number
-            label: "Revenue"
-            additional_dimensions:
-              revenue_by_type:
-                type: string
-                label: "Revenue By Type"
-                sql: "SQL_QUERY_HERE"
-                group_label: "Revenue Metrics"
+        config:
+          meta:
+            dimension:
+              type: number
+              label: "Revenue"
+              additional_dimensions:
+                revenue_by_type:
+                  type: string
+                  label: "Revenue By Type"
+                  sql: "SQL_QUERY_HERE"
+                  group_label: "Revenue Metrics"
         """
         data = yaml.safe_load(yaml_data)
         errors = find_indentation_issues(data)
@@ -90,15 +93,16 @@ models:
   - name: MetricsUnderDimension
     columns:
       - name: revenue
-        meta:
-          dimension:
-            type: number
-            label: "Revenue"
-            metrics:
-              total_revenue:
-                type: sum
-                sql: "SQL_QUERY_HERE"
-                group_label: "Total Revenue"
+        config:
+          meta:
+            dimension:
+              type: number
+              label: "Revenue"
+              metrics:
+                total_revenue:
+                  type: sum
+                  sql: "SQL_QUERY_HERE"
+                  group_label: "Total Revenue"
         """
         data = yaml.safe_load(yaml_data)
         errors = find_indentation_issues(data)

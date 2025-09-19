@@ -2,8 +2,7 @@ import unittest
 
 import yaml
 
-from lightdash_pre_commit.utils import has_dimensions
-from lightdash_pre_commit.utils import has_metrics
+from lightdash_pre_commit.utils import has_dimensions, has_metrics
 
 
 class TestHasDimensions(unittest.TestCase):
@@ -13,9 +12,10 @@ class TestHasDimensions(unittest.TestCase):
           - name: model_with_dimensions
             columns:
               - name: column_with_dimension
-                meta:
-                  dimension:
-                    type: string
+                config:
+                  meta:
+                    dimension:
+                      type: string
         """
         data = yaml.safe_load(yaml_data)
         self.assertTrue(has_dimensions(data))
@@ -47,10 +47,11 @@ class TestHasMetrics(unittest.TestCase):
           - name: model_with_metrics
             columns:
               - name: column_with_metric
-                meta:
-                  metrics:
-                    test_sum:
-                      type: sum
+                config:
+                  meta:
+                    metrics:
+                      test_sum:
+                        type: sum
         """
         data = yaml.safe_load(yaml_data)
         self.assertTrue(has_metrics(data))

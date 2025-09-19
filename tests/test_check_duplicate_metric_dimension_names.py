@@ -19,39 +19,42 @@ class TestDBTYAMLChecks(unittest.TestCase):
         yaml_data = """
 models:
   - name: Test All Clean - No Duplicates
-    meta:
-      metrics:
-        revenue_total:
-          sql: "sum(revenue)"
-        profit_total:
-          sql: "sum(profit)"
+    config:
+      meta:
+        metrics:
+          revenue_total:
+            sql: "sum(revenue)"
+          profit_total:
+            sql: "sum(profit)"
 
     columns:
       - name: date_at
-        meta:
-          dimension:
-            type: date
-            time_intervals: [ 'DAY', 'WEEK', 'MONTH', 'QUARTER' ]
-          additional_dimensions:
-            period_7_days:
-              type: string
-              sql: "abc"
-              group_label: "Period Indicators"
-            period_28_days:
-              type: string
-              sql: "abc"
-          metrics:
-            days_in_period:
-              type: number
-              sql: "(datediff('day', min(date_at), max(date_at)) + 1)"
+        config:
+          meta:
+            dimension:
+              type: date
+              time_intervals: [ 'DAY', 'WEEK', 'MONTH', 'QUARTER' ]
+            additional_dimensions:
+              period_7_days:
+                type: string
+                sql: "abc"
+                group_label: "Period Indicators"
+              period_28_days:
+                type: string
+                sql: "abc"
+            metrics:
+              days_in_period:
+                type: number
+                sql: "(datediff('day', min(date_at), max(date_at)) + 1)"
       - name: revenue
-        meta:
-          dimension:
-            hidden: true
-          metrics:
-            total_revenue:
-              type: sum
-              group_label: "Revenue"
+        config:
+          meta:
+            dimension:
+              hidden: true
+            metrics:
+              total_revenue:
+                type: sum
+                group_label: "Revenue"
         """
         data = yaml.safe_load(yaml_data)
         errors = find_duplicates(data)
@@ -61,39 +64,42 @@ models:
         yaml_data = """
 models:
   - name: Test Duplicate Across Dim and Measures
-    meta:
-      metrics:
-        revenue_total:
-          sql: "sum(revenue)"
-        profit_total:
-          sql: "sum(profit)"
+    config:
+      meta:
+        metrics:
+          revenue_total:
+            sql: "sum(revenue)"
+          profit_total:
+            sql: "sum(profit)"
 
     columns:
       - name: date_at
-        meta:
-          dimension:
-            type: date
-            time_intervals: [ 'DAY', 'WEEK', 'MONTH', 'QUARTER' ]
-          additional_dimensions:
-            period_7_days:
-              type: string
-              sql: "abc"
-              group_label: "Period Indicators"
-            period_28_days:
-              type: string
-              sql: "abc"
-          metrics:
-            days_in_period:
-              type: number
-              sql: "(datediff('day', min(date_at), max(date_at)) + 1)"
+        config:
+          meta:
+            dimension:
+              type: date
+              time_intervals: [ 'DAY', 'WEEK', 'MONTH', 'QUARTER' ]
+            additional_dimensions:
+              period_7_days:
+                type: string
+                sql: "abc"
+                group_label: "Period Indicators"
+              period_28_days:
+                type: string
+                sql: "abc"
+            metrics:
+              days_in_period:
+                type: number
+                sql: "(datediff('day', min(date_at), max(date_at)) + 1)"
       - name: revenue
-        meta:
-          dimension:
-            hidden: true
-          metrics:
-            revenue_total:
-              type: sum
-              group_label: "Revenue"
+        config:
+          meta:
+            dimension:
+              hidden: true
+            metrics:
+              revenue_total:
+                type: sum
+                group_label: "Revenue"
         """
         data = yaml.safe_load(yaml_data)
         errors = find_duplicates(data)
@@ -108,22 +114,24 @@ models:
   - name: Test Duplicate Within Metrics
     columns:
       - name: date_at
-        meta:
-          dimension:
-            type: date
-            time_intervals: [ 'DAY', 'WEEK', 'MONTH', 'QUARTER' ]
-          metrics:
-            test_me:
-              type: number
-              sql: "(datediff('day', min(date_at), max(date_at)) + 1)"
+        config:
+          meta:
+            dimension:
+              type: date
+              time_intervals: [ 'DAY', 'WEEK', 'MONTH', 'QUARTER' ]
+            metrics:
+              test_me:
+                type: number
+                sql: "(datediff('day', min(date_at), max(date_at)) + 1)"
       - name: revenue
-        meta:
-          dimension:
-            hidden: true
-          metrics:
-            test_me:
-              type: sum
-              group_label: "Revenue"
+        config:
+          meta:
+            dimension:
+              hidden: true
+            metrics:
+              test_me:
+                type: sum
+                group_label: "Revenue"
         """
         data = yaml.safe_load(yaml_data)
         errors = find_duplicates(data)
@@ -137,24 +145,26 @@ models:
   - name: Test Duplicate Across Dimensions
     columns:
       - name: date_at
-        meta:
-          dimension:
-            type: date
-            time_intervals: [ 'DAY', 'WEEK', 'MONTH', 'QUARTER' ]
-          additional_dimensions:
-            test_me:
-              type: string
-              sql: "abc"
-              group_label: "Period Indicators"
+        config:
+          meta:
+            dimension:
+              type: date
+              time_intervals: [ 'DAY', 'WEEK', 'MONTH', 'QUARTER' ]
+            additional_dimensions:
+              test_me:
+                type: string
+                sql: "abc"
+                group_label: "Period Indicators"
       - name: revenue
-        meta:
-          dimension:
-            hidden: true
-          additional_dimensions:
-            test_me:
-              type: string
-              sql: "abc"
-              group_label: "Period Indicators"
+        config:
+          meta:
+            dimension:
+              hidden: true
+            additional_dimensions:
+              test_me:
+                type: string
+                sql: "abc"
+                group_label: "Period Indicators"
         """
         data = yaml.safe_load(yaml_data)
         errors = find_duplicates(data)

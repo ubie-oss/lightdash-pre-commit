@@ -29,10 +29,10 @@ def has_dimensions_in_model(data: dict) -> bool:
     """
     for model in data.get("models", []):
         for column in model.get("columns", []):
-            if "meta" in column:
+            if "config" in column and "meta" in column["config"]:
                 if (
-                    "dimension" in column["meta"]
-                    or "additional_dimensions" in column["meta"]
+                    "dimension" in column["config"]["meta"]
+                    or "additional_dimensions" in column["config"]["meta"]
                 ):
                     return True
     return False
@@ -69,7 +69,7 @@ def has_metrics_in_model(data: dict) -> bool:
     """
     for model in data.get("models", []):
         for column in model.get("columns", []):
-            if "meta" in column:
-                if "metrics" in column["meta"]:
+            if "config" in column and "meta" in column["config"]:
+                if "metrics" in column["config"]["meta"]:
                     return True
     return False
